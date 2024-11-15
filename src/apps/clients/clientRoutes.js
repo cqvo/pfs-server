@@ -15,5 +15,4 @@ router.route('/:clientId')
 router.route('/upload')
     .post(upload.single('csvFile'), controller.processClientsCsv);
 
-
 export default router;

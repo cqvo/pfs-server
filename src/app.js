@@ -8,6 +8,13 @@ app.use(morgan('common'));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const ignoreFavicon = (req, res, next) => {
+    if (req.originalUrl.includes('favicon.ico')) {
+        res.status(204).end()
+    }
+    next();
+}
+app.use(ignoreFavicon);
 app.use('/v1', routes);
 
 export default app;
