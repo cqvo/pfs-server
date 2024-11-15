@@ -1,0 +1,39 @@
+{
+  "name": "pfs-server",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": ".src/index.js",
+  "author": "Chris V <50410061+cqvo@users.noreply.github.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.16"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.11.2",
+    "@neondatabase/serverless": "^0.10.3",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "csv-parser": "^3.0.0",
+    "dotenv": "^16.4.5",
+    "drizzle-graphql": "^0.8.5",
+    "drizzle-orm": "^0.36.2",
+    "esm-module-alias": "^2.2.1",
+    "express": "^4.21.1",
+    "graphql": "^16.9.0",
+    "jsdoc": "^4.0.4",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "plaid": "^30.0.0",
+    "streamifier": "^0.1.1",
+    "tsx": "^4.19.2",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.28.1",
+    "typescript": "^5.6.3"
+  },
+  "aliases": {
+    "@libs": "src/libs"
+  }
+}
