@@ -8,6 +8,13 @@
       "when": 1731611607518,
       "tag": "0000_brown_impossible_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1731642806404,
+      "tag": "0001_puzzling_tattoo",
+      "breakpoints": true
     }
   ]
 }
