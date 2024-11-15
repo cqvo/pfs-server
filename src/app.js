@@ -2,10 +2,11 @@ import express from 'express';
 import routes from './routes/v1/index.js';
 import logger from '#libs/logger.js';
 import morgan from 'morgan';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 app.use(morgan('common'));
-app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const ignoreFavicon = (req, res, next) => {
