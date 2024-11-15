@@ -2,13 +2,15 @@
   "name": "pfs-server",
   "version": "1.0.0",
   "type": "module",
-  "exports": ".src/index.js",
+  "main": "src/index.js",
   "author": "Chris V <50410061+cqvo@users.noreply.github.com>",
   "license": "MIT",
   "engines": {
     "node": ">=14.16"
   },
   "scripts": {
+    "build": "tsc",
+    "test": "jest",
     "start": "node src/index.js"
   },
   "dependencies": {
@@ -21,22 +23,27 @@
     "dotenv": "^16.4.5",
     "drizzle-graphql": "^0.8.5",
     "drizzle-orm": "^0.36.2",
-    "esm-module-alias": "^2.2.1",
     "express": "^4.21.1",
     "graphql": "^16.9.0",
     "jsdoc": "^4.0.4",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.4",
     "plaid": "^30.0.0",
     "streamifier": "^0.1.1",
     "tsx": "^4.19.2",
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-jest": "^29.7.0",
     "drizzle-kit": "^0.28.1",
+    "jest": "^29.7.0",
     "typescript": "^5.6.3"
   },
-  "aliases": {
-    "@libs": "src/libs"
+  "imports": {
+    "#libs/*": "./src/libs/*",
+    "#db/*": "./src/db/*"
   }
 }

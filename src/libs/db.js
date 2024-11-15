@@ -1,6 +1,31 @@
-import { drizzle } from 'drizzle-orm/neon-serverless';
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+import logger from '#libs/logger.js';
+import { config } from 'dotenv';
+config({ path: '.env' });
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://neondb_owner:Mzm18LVljbcP@ep-dawn-fog-a5o424gy.us-east-2.aws.neon.tech/neondb?sslmode=require';
+const sql = neon(process.env.DATABASE_URL);
+export const db = drizzle({ client: sql });
 
-export * as schema from '../db/schema';
-export const db = drizzle({connectionString, schema});
+import { dimItemStatus, dimRequestStatus } from '../db/schema.js';
+export const seedStatus = async () => {
+    try {
+        await db.insert(dimRequestStatus)
+            .values([
+                { id: 1, status: 'Pending' },
+                { id: 2, status: 'Completed' },
+                { id: 3, status: 'Failed' }
+            ])
+            .onConflictDoNothing();
+        await db.insert(dimItemStatus)
+            .values([
+                { id: 1, status: 'Pending' },
+                { id: 2, status: 'Completed' },
+                { id: 3, status: 'Failed' }
+            ])
+            .onConflictDoNothing();
+        logger.info('Seeded item and request status tables');
+    } catch (error) {
+        logger.error(error);
+    }
+}

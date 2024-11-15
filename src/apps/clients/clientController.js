@@ -1,4 +1,4 @@
-import logger from '$libs/logger.js';
+import logger from '#libs/logger.js';
 import clientService from './clientService.js';
 import clientModel from './clientModel.js';
 
@@ -13,7 +13,7 @@ const clientController = {
     },
     getAllClients: async (req, res) => {
         try {
-            const clients = clientModel.findAll();
+            const clients = await clientModel.findAll();
             res.status(200).json(clients)
         } catch (error) {
             res.status(500).send(error.message);
@@ -21,8 +21,15 @@ const clientController = {
     },
     processClientsCsv: async (req, res) => {
         try {
+            if (!req.file) {
+                res.status(404).send('No file found.');
+            }
             const data = await clientService.transformClientsCsv(req.file);
+            if (!data) {
+                res.status(404).send('Empty file found.');
+            }
             const clients = await clientModel.addClients(data);
+            res.status(200).json(clients);
         } catch (error) {
             res.status(500).send(error.message);
         }

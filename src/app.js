@@ -1,6 +1,6 @@
 import express from 'express';
 import routes from './routes/v1/index.js';
-import logger from '@libs/logger.js';
+import logger from '#libs/logger.js';
 import morgan from 'morgan';
 
 const app = express();

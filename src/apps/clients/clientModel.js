@@ -1,11 +1,9 @@
 import { drizzle } from 'drizzle-orm/neon-http';
 import { eq } from 'drizzle-orm';
-import { neon } from '@neondatabase/serverless/';
-import { dimClients, dimAccounts, dimItems } from '../../db/schema';
-const sql = neon(process.env.DATABASE_URL);
-const db = drizzle(sql);
+import { db } from '#libs/db.js';
+import { dimClients, dimAccounts, dimItems } from '../../db/schema.js';
 
-import logger from '$libs/logger.js';
+import logger from '#libs/logger.js';
 
 const clientModel = {
     findById: async (clientId) => {
@@ -39,7 +37,8 @@ const clientModel = {
                         set: {
                             companyName: row.companyName,
                             emailAddress: row.emailAddress
-                        }})
+                        }
+                    })
                     .returning();
                 clients.push(client);
             }
@@ -49,6 +48,6 @@ const clientModel = {
             throw new Error(error);
         }
     }
-}
+};
 
 export default clientModel;

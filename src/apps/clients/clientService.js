@@ -1,12 +1,13 @@
 import streamifier from 'streamifier';
-import logger from '$libs/logger.js';
+import logger from '#libs/logger.js';
 import clientModel from './clientModel.js';
 import csvParser from 'csv-parser';
 
 const clientService = {
     getClient: async (clientId) => {
         try {
-            return clientModel.findById(clientId);
+            const clients = await clientModel.findById(clientId);
+            return clients[0];
         } catch (error) {
             logger.error(error);
             throw new Error(error);
@@ -20,10 +21,8 @@ const clientService = {
                 .pipe(csvParser({ headers: ['taxdomeId', 'companyName', 'emailAddress'] }))
                 .on('data', (row) => {
                     rows.push(row);
-                })
-                .on('end', () => {
-                    return rows;
                 });
+            return rows;
         } catch (error) {
             logger.error(error);
             throw new Error(error);

@@ -1,4 +1,4 @@
-import logger from '$libs/logger.js';
+import logger from '#libs/logger.js';
 import linkModel from './linkModel.js'
 
 const linkService = {
@@ -14,9 +14,10 @@ const linkService = {
                 language: 'en',
                 country_codes: ['US'],
                 webhook: process.env.WEBHOOK,
-                hosted_link: {
-                    delivery_method: 'email'
-                },
+                // TODO: Remove before launch
+                // hosted_link: {
+                //     delivery_method: 'email'
+                // },
             };
         } catch (error) {
             logger.error(error);

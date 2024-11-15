@@ -15,6 +15,20 @@
       "when": 1731642806404,
       "tag": "0001_puzzling_tattoo",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1731647522621,
+      "tag": "0002_bizarre_thanos",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1731651410691,
+      "tag": "0003_dizzy_tyrannus",
+      "breakpoints": true
     }
   ]
 }

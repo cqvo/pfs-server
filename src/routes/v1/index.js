@@ -2,7 +2,7 @@ import express from 'express';
 import clientsRoute from '../../apps/clients/clientRoutes.js';
 import linksRoute from '../../apps/links/linkRoutes.js';
 import reportsRoute from '../../apps/reports/routes.js';
-import logger from '@libs/logger.js';
+import logger from '#libs/logger.js';
 
 const router = express.Router();
 

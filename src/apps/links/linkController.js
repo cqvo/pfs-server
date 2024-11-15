@@ -1,7 +1,8 @@
 import clientService from '../clients/clientService.js';
 import linkService from './linkService.js';
 import linkModel from './linkModel.js';
-import plaid from '@libs/plaid';
+import plaid from '#libs/plaid.js';
+import logger from '#libs/logger.js';
 
 const linkController = {
     createLinkRequest: async (req, res) => {
@@ -10,8 +11,11 @@ const linkController = {
             const client = await clientService.getClient(clientId);
             const payload = await linkService.constructPayload(client);
             const response = await plaid.linkTokenCreate(payload);
+            console.log('response', response);
             const request = { 'client_id': clientId, ...response.data };
+            console.log('request', request);
             const values = await linkService.constructLink(request);
+            console.log('values', values);
             const link = await linkModel.addLink(values);
             res.status(201).json(link);
         } catch (error) {
@@ -20,7 +24,7 @@ const linkController = {
     },
     getLinkRequest: async (req, res) => {
         try {
-            const link = linkService.getLinkRequest(req.params['linkId']);
+            const link = await linkService.getLinkRequest(req.params['linkId']);
             res.status(200).json(link);
         } catch (error) {
             res.status(500).send(error.message);
@@ -35,10 +39,12 @@ const linkController = {
                     res.status(200).end()
                 }
                 if (code === 'ITEM_ADD_RESULT') {
-                    const linkPlaidId = req.body['link_token'];
-                    const link = await linkModel.findByLinkToken(linkPlaidId);
+                    console.log('Webhook', type, code);
+                    const linkToken = req.body['link_token'];
+                    const link = await linkModel.findByLinkToken(linkToken);
                     const publicToken = req.body['public_token'];
                     const response = await plaid.itemPublicTokenExchange(publicToken);
+                    console.log('response', response);
                     const request = {
                         'client_id': link.clientId,
                         ...response.data

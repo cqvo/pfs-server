@@ -3,7 +3,7 @@ import { sql } from "drizzle-orm"
 
 export const dimItems = pgTable("dim_items", {
 	id: serial().primaryKey().notNull(),
-	plaidId: varchar("plaid_id").notNull(),
+	plaidId: varchar("plaid_id").unique().notNull(),
 	accessToken: varchar("access_token"),
 	clientId: integer("client_id").notNull(),
 	itemStatusId: integer("item_status_id").default(1).notNull(),
@@ -26,7 +26,7 @@ export const dimItems = pgTable("dim_items", {
 
 export const dimAccounts = pgTable("dim_accounts", {
 	id: serial().primaryKey().notNull(),
-	plaidId: varchar("plaid_id").notNull(),
+	plaidId: varchar("plaid_id").unique().notNull(),
 	itemId: integer("item_id").notNull(),
 	institutionId: integer("institution_id").notNull(),
 	name: varchar().notNull(),
@@ -51,7 +51,7 @@ export const dimAccounts = pgTable("dim_accounts", {
 
 export const dimInstitutions = pgTable("dim_institutions", {
 	id: serial().primaryKey().notNull(),
-	plaidId: varchar("plaid_id").notNull(),
+	plaidId: varchar("plaid_id").unique().notNull(),
 	name: varchar().notNull(),
 	createdAt: timestamp("created_at", { mode: 'string' }).notNull(),
 	updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().notNull(),
@@ -59,7 +59,7 @@ export const dimInstitutions = pgTable("dim_institutions", {
 
 export const dimClients = pgTable("dim_clients", {
 	id: serial().primaryKey().notNull(),
-	taxdomeId: varchar("taxdome_id").notNull(),
+	taxdomeId: varchar("taxdome_id").unique().notNull(),
 	companyName: varchar("company_name").notNull(),
 	emailAddress: varchar("email_address").notNull(),
 	createdAt: timestamp("created_at", { mode: 'string' }).defaultNow().notNull(),
@@ -69,11 +69,13 @@ export const dimClients = pgTable("dim_clients", {
 export const dimItemStatus = pgTable("dim_item_status", {
 	id: serial().primaryKey().notNull(),
 	status: varchar(),
+	createdAt: timestamp("created_at", { mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().notNull(),
 });
 
 export const factLinkRequests = pgTable("fact_link_requests", {
 	id: serial().primaryKey().notNull(),
-	linkToken: varchar("link_token").notNull(),
+	linkToken: varchar("link_token").unique().notNull(),
 	clientId: integer("client_id").notNull(),
 	requestId: varchar("request_id").notNull(),
 	requestStatusId: integer("request_status_id").default(1).notNull(),
@@ -100,13 +102,13 @@ export const factLinkRequests = pgTable("fact_link_requests", {
 export const dimRequestStatus = pgTable("dim_request_status", {
 	id: serial().primaryKey().notNull(),
 	status: varchar(),
-	createdAt: timestamp("created_at", { mode: 'string' }),
-	updatedAt: timestamp("updated_at", { mode: 'string' }),
+	createdAt: timestamp("created_at", { mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { mode: 'string' }).defaultNow().notNull(),
 });
 
 export const factReportRequests = pgTable("fact_report_requests", {
 	id: serial().primaryKey().notNull(),
-	plaidId: varchar("plaid_id").notNull(),
+	plaidId: varchar("plaid_id").unique().notNull(),
 	clientId: integer("client_id").notNull(),
 	requestStatusId: integer("request_status_id").default(1).notNull(),
 	token: varchar().notNull(),

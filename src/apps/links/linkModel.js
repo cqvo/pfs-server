@@ -1,16 +1,16 @@
 import { drizzle } from 'drizzle-orm/neon-http';
 import { eq } from 'drizzle-orm';
-import { neon } from '@neondatabase/serverless/';
-import { dimClients, dimItems, factLinkRequests } from '../../db/schema';
-import logger from '$libs/logger.js';
+import { db } from '#libs/db.js';
+import { dimClients, dimAccounts, dimItems, factLinkRequests } from '../../db/schema.js';
 
-const sql = neon(process.env.DATABASE_URL);
-const db = drizzle(sql);
+import logger from '#libs/logger.js';
 
 const linkModel = {
     findById: async (linkId) => {
         try {
-            return await db.select().from(factLinkRequests).where(eq(factLinkRequests.id, linkId));
+            const links = await db.select().from(factLinkRequests).where(eq(factLinkRequests.id, linkId));
+            console.log('link', links[0]);
+            return links[0];
         } catch (error) {
             logger.error(error);
             throw new Error(error);
@@ -18,9 +18,10 @@ const linkModel = {
     },
     findByLinkToken: async (linkToken) => {
         try {
-            return await db.select()
+            const links = await db.select()
                 .from(factLinkRequests)
                 .where(eq(factLinkRequests.linkToken, linkToken));
+            return links[0];
         } catch (error) {
             logger.error(error);
             throw new Error(error);

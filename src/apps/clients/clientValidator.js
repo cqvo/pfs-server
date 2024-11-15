@@ -1,4 +1,4 @@
-import logger from '@libs/logger';
+import logger from '#libs/logger.js';
 
 const clientValidator = {
     get: (req, res, next) => {
