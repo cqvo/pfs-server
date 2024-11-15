@@ -6,7 +6,7 @@
   "author": "Chris V <50410061+cqvo@users.noreply.github.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=14.16"
+    "node": "22.x"
   },
   "scripts": {
     "build": "tsc",
@@ -21,14 +21,12 @@
     "crypto": "^1.0.1",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.4.5",
-    "drizzle-graphql": "^0.8.5",
     "drizzle-orm": "^0.36.2",
     "express": "^4.21.1",
     "graphql": "^16.9.0",
     "jsdoc": "^4.0.4",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "mysql2": "^3.11.4",
     "plaid": "^30.0.0",
     "streamifier": "^0.1.1",
     "tsx": "^4.19.2",

@@ -1,8 +1,7 @@
-import { drizzle } from 'drizzle-orm/neon-http';
 import { eq } from 'drizzle-orm';
 import { db } from '#libs/db.js';
 import { dimClients, dimAccounts, dimItems, factLinkRequests } from '../../db/schema.js';
-
+import { encrypt, decrypt } from '#libs/crypto.js';
 import logger from '#libs/logger.js';
 
 const linkModel = {
@@ -40,11 +39,15 @@ const linkModel = {
     upsertItem: async (values) => {
         try {
             return await db.insert(dimItems)
-                .values(values)
+                .values({
+                    plaidId: values.plaidId,
+                    clientId: values.clientId,
+                    accessToken: encrypt(values.accessToken),
+                })
                 .onConflictDoUpdate({
                     target: dimItems.plaidId,
                     set: {
-                        accessToken: values.accessToken,
+                        accessToken: encrypt(values.accessToken),
                     }
                 })
                 .returning();

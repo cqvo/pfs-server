@@ -1,0 +1,2 @@
+ALTER TABLE "fact_link_requests" ADD CONSTRAINT "fact_link_requests_link_token_unique" UNIQUE("link_token");--> statement-breakpoint
+ALTER TABLE "fact_report_requests" ADD CONSTRAINT "fact_report_requests_plaid_id_unique" UNIQUE("plaid_id");
